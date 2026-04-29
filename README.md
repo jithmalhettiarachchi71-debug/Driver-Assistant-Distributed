@@ -472,3 +472,5 @@ This project is for educational purposes. See [LICENSE](LICENSE) for details.
 ---
 
 **⚠️ Disclaimer**: This is a prototype system for educational purposes. Do not rely on it as your sole safety system while driving. Always pay attention to the road and follow traffic laws.
+#   D r i v e r - A s s i s t a n t - D i s t r i b u t e d  
+ 
