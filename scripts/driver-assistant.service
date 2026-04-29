@@ -1,0 +1,23 @@
+[Unit]
+Description=Driver Assistant - Vehicle Safety Alert System
+After=multi-user.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/Driver-Assistant
+Environment="PATH=/home/pi/Driver-Assistant/venv/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="DISPLAY=:0"
+ExecStart=/home/pi/Driver-Assistant/venv/bin/python driver_assistant.py --source csi
+Restart=on-failure
+RestartSec=5
+StandardOutput=append:/home/pi/Driver-Assistant/logs/service.log
+StandardError=append:/home/pi/Driver-Assistant/logs/service.log
+
+# Give access to camera and GPIO
+SupplementaryGroups=video gpio audio
+
+[Install]
+WantedBy=multi-user.target

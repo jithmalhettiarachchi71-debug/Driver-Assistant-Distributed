@@ -1,0 +1,53 @@
+[Unit]
+Description=Vehicle Safety Alert System
+Documentation=https://github.com/your-repo/Driver-Assistant
+After=network.target graphical.target
+Wants=network.target
+
+# Hardware dependencies
+After=dev-ttyAMA0.device
+Wants=dev-ttyAMA0.device
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+
+# Working directory
+WorkingDirectory=/home/pi/Driver-Assistant
+
+# Environment
+Environment=PYTHONUNBUFFERED=1
+Environment=HOME=/home/pi
+
+# Use virtual environment Python
+ExecStart=/home/pi/Driver-Assistant/venv/bin/python -m src.main --source csi --headless
+
+# Restart policy
+Restart=always
+RestartSec=5
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+# Resource limits
+MemoryMax=1G
+CPUQuota=80%
+
+# Security hardening
+NoNewPrivileges=false
+ProtectSystem=false
+ProtectHome=false
+
+# GPIO requires access to /dev/gpiomem
+SupplementaryGroups=gpio dialout video
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=driver-assistant
+
+# Watchdog
+WatchdogSec=30
+
+[Install]
+WantedBy=multi-user.target
