@@ -188,9 +188,8 @@ def run_client(
     socket = build_socket(context, server_addr, timeout_ms=timeout_ms)
     gpio = GPIOController(buzzer_pin=18, led_pin=27)
 
-    cap = cv2.VideoCapture(camera_index)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+    pipeline = "libcamerasrc ! video/x-raw, width=640, height=480, framerate=30/1 ! videoconvert ! video/x-raw, format=BGR ! appsink drop=true"
+    cap = cv2.VideoCapture(pipeline, cv2.CAP_GSTREAMER)
 
     if not cap.isOpened():
         raise RuntimeError(f"Failed to open camera index {camera_index}")
